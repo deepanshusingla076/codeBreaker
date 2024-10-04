@@ -1,0 +1,20 @@
+#loading-spinner {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 200px; /* Adjust size as needed */
+    height: 200px; /* Adjust size as needed */
+    background: url('../../mario_run.gif') no-repeat center center;
+    background-size: contain; /* Adjust size of gif */
+    z-index: 9999;
+    display: none;
+}
+
+body.loading #loading-spinner {
+    display: block;
+}
+
+body.loading *:not(#loading-spinner) {
+    filter: blur(5px); /* Blur only the content, not the spinner */
+}

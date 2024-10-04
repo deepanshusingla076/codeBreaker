@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pig Pen Game</title>
+    <style>
+    </style>
+</head>
+<body>
+    
+</body>
+</html>
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Games</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" href="../assets/css/main.css" />
+    <link rel="stylesheet" href="../assets/css/nav.css" />
+    <link rel="icon" href="../images/light-icon.png" />
+    <link rel="stylesheet" href="../assets/css/load.css" />
+    <script src="https://kit.fontawesome.com/0985d929cd.js" crossorigin="anonymous"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: var(--bg-dull);
+        }
+
+        .game-container {
+            text-align: center;
+            background: var(--bg);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #word-container {
+            font-size: 24px;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        #input-container {
+            margin: 10px 0;
+        }
+
+        #guess-input {
+            font-size: 18px;
+            text-align: center;
+        }
+
+        #guess-button, #reset-button {
+            font-size: 18px;
+            padding: 5px 10px;
+            margin: 5px;
+        }
+
+        #message {
+            font-size: 18px;
+            color: red;
+        }
+        .copyright {
+                margin-top: 10px;
+                text-align: center;
+                margin-top: 20px;
+                font-size: 14px;
+                color: #888;
+            }
+
+    </style>
+</head>
+<body class="is-preload">
+    <nav id="menu" class="menu">
+        <div class="actionbar">
+            <div class="menu-actionbar-div">
+                <button id="menuBtn" class="menu-btn">
+                    <i class="fas fa-bars menu-icon"></i>
+                </button>
+                <h3 class="menuText actionbar-title">Dashboard</h3>
+            </div>
+        </div>
+        <ul class="optionsBar">
+            <li class="menuItem">
+                <a href="../index.html" class="menuOption menu-home">
+                    <i class="fas fa-home menu-icon"></i>
+                    <h5 class="menuText menu-label">Home</h5>
+                </a>
+            </li>
+            <li class="menuBreak">
+                <hr class="menu-hr">
+            </li>
+            <li class="menuItem">
+                <a href="../content.html">
+                    <button id="productManagerBtn" class="menuOption menu-product">
+                        <i class="fa-solid fa-book menu-icon"></i>
+                        <h5 class="menuText menu-label">Content</h5>
+                    </button>
+                </a>
+            </li>
+            <li class="menuItem">
+                <a href="../games.html">
+                    <button id="productManagerBtn" class="menuOption menu-game">
+                        <i class="fa-solid fa-gamepad"></i>
+                        <h5 class="menuText menu-label">Games</h5>
+                    </button>
+                </a>
+            </li>
+            <li class="menuItem">
+                <a href="../community.html">
+                    <button id="constantManagerBtn" class="menuOption menu-community">
+                        <i class="fa-solid fa-users menu-icon"></i>
+                        <h5 class="menuText menu-label">Community</h5>
+                    </button>
+                </a>
+            </li>
+            <li class="menuItem">
+                <a href="../settings.html">
+                    <button id="orderManagerBtn" class="menuOption menu-settings">
+                        <i class="fa-solid fa-gear menu-icon"></i>
+                        <h5 class="menuText menu-label">Settings</h5>
+                    </button>
+                </a>
+            </li>
+        </ul>
+        <div class="menuUser">
+            <a href="../dashboard.html" class="menu-user-link">
+                <div class="user-avatar">
+                    <img src="../images/user.jpg" alt="User Image">
+                </div>
+                <h5 class="Username menuText">A. Maurya</h5>
+                <p class="menuText menu-chevron">
+                    <i class="fas fa-chevron-right"></i>
+                </p>
+            </a>
+        </div>
+        <div class="themeBar">
+            <div class="theme-wrapper">
+                <button id="themeChangeBtn" class="theme-btn">
+                    <i class="fas theme-icon"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+    <br>
+    <div class="game-container">
+        <h1>Pig Pen Game</h1>
+        <div id="word-container"></div>
+        <div id="input-container">
+            <input type="text" id="guess-input" maxlength="1" placeholder="Guess a letter">
+            <button id="guess-button">Guess</button>
+        </div>
+        <p id="message"></p>
+        <button id="reset-button">Play Again</button>
+    </div>
+    
+
+
+
+		<!-- Scripts -->
+		<script src="../assets/js/jquery.min.js"></script>
+		<script src="../assets/js/jquery.scrolly.min.js"></script>
+		<script src="../assets/js/browser.min.js"></script>
+		<script src="../assets/js/breakpoints.min.js"></script>
+		<script src="../assets/js/util.js"></script>
+		<script src="../assets/js/main.js"></script>
+		<script src="../assets/js/nav.js"></script>
+        <script src="../assets/js/load.js"></script>
+        <script>
+            const words = ["javascript", "html", "css", "programming", "webdev"];
+            let chosenWord, guessedLetters, attemptsLeft;
+    
+            const wordContainer = document.getElementById('word-container');
+            const guessInput = document.getElementById('guess-input');
+            const guessButton = document.getElementById('guess-button');
+            const message = document.getElementById('message');
+            const resetButton = document.getElementById('reset-button');
+    
+            function startGame() {
+                chosenWord = words[Math.floor(Math.random() * words.length)];
+                guessedLetters = [];
+                attemptsLeft = 6;
+                updateWordDisplay();
+                message.textContent = '';
+                guessInput.value = '';
+                guessButton.disabled = false;
+            }
+    
+            function updateWordDisplay() {
+                wordContainer.innerHTML = chosenWord
+                    .split('')
+                    .map(letter => (guessedLetters.includes(letter) ? letter : '_'))
+                    .join(' ');
+            }
+    
+            function handleGuess() {
+                const guess = guessInput.value.toLowerCase();
+                if (guess && !guessedLetters.includes(guess)) {
+                    guessedLetters.push(guess);
+                    if (!chosenWord.includes(guess)) {
+                        attemptsLeft--;
+                    }
+                    if (attemptsLeft <= 0) {
+                        message.textContent = `Game over! The word was "${chosenWord}".`;
+                        guessButton.disabled = true;
+                    } else if (!wordContainer.textContent.includes('_')) {
+                        message.textContent = 'Congratulations! You guessed the word!';
+                        guessButton.disabled = true;
+                    }
+                    updateWordDisplay();
+                }
+                guessInput.value = '';
+            }
+    
+            guessButton.addEventListener('click', handleGuess);
+            resetButton.addEventListener('click', startGame);
+    
+            startGame();
+        </script>
+</body>
+</html>

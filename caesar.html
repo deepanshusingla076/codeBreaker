@@ -1,0 +1,201 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Caesar Cipher</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" href="../assets/css/main.css" />
+    <link rel="stylesheet" href="../assets/css/nav.css" />
+    <link rel="icon" href="../images/light-icon.png" />
+    <link rel="stylesheet" href="../assets/css/load.css" />
+    <script src="https://kit.fontawesome.com/0985d929cd.js" crossorigin="anonymous"></script>
+    <style>
+        body {
+            background-color: var(--bg-dull);
+        }
+        .cipher-container {
+            text-align: center;
+            background: var(--bg);
+            padding: 20px;
+            border-radius: 10px;
+            margin-left: 20vw;
+            max-width: 800px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        input, button {
+            font-size: 18px;
+            padding: 5px;
+            margin: 5px;
+        }
+
+        #cipher-text {
+            margin-top: 10px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        #error-message {
+            color: red;
+            margin-top: 10px;
+        }
+
+        .copyright {
+                margin-top: 10px;
+                text-align: center;
+                margin-top: 20px;
+                font-size: 14px;
+                color: #888;
+            }
+    </style>
+</head>
+<body class="is-preload">
+    <nav id="menu" class="menu">
+        <div class="actionbar">
+            <div class="menu-actionbar-div">
+                <button id="menuBtn" class="menu-btn">
+                    <i class="fas fa-bars menu-icon"></i>
+                </button>
+                <h3 class="menuText actionbar-title">Dashboard</h3>
+            </div>
+        </div>
+        <ul class="optionsBar">
+            <li class="menuItem">
+                <a href="../index.html" class="menuOption menu-home">
+                    <i class="fas fa-home menu-icon"></i>
+                    <h5 class="menuText menu-label">Home</h5>
+                </a>
+            </li>
+            <li class="menuBreak">
+                <hr class="menu-hr">
+            </li>
+            <li class="menuItem">
+                <a href="../content.html">
+                    <button id="productManagerBtn" class="menuOption menu-product">
+                        <i class="fa-solid fa-book menu-icon"></i>
+                        <h5 class="menuText menu-label">Content</h5>
+                    </button>
+                </a>
+            </li>
+            <li class="menuItem">
+                <a href="../games.html">
+                    <button id="productManagerBtn" class="menuOption menu-game">
+                        <i class="fa-solid fa-gamepad"></i>
+                        <h5 class="menuText menu-label">Games</h5>
+                    </button>
+                </a>
+            </li>
+            <li class="menuItem">
+                <a href="../community.html">
+                    <button id="constantManagerBtn" class="menuOption menu-community">
+                        <i class="fa-solid fa-users menu-icon"></i>
+                        <h5 class="menuText menu-label">Community</h5>
+                    </button>
+                </a>
+            </li>
+            <li class="menuItem">
+                <a href="../settings.html">
+                    <button id="orderManagerBtn" class="menuOption menu-settings">
+                        <i class="fa-solid fa-gear menu-icon"></i>
+                        <h5 class="menuText menu-label">Settings</h5>
+                    </button>
+                </a>
+            </li>
+        </ul>
+        <div class="menuUser">
+            <a href="../dashboard.html" class="menu-user-link">
+                <div class="user-avatar">
+                    <img src="../images/user.jpg" alt="User Image">
+                </div>
+                <h5 class="Username menuText">A. Maurya</h5>
+                <p class="menuText menu-chevron">
+                    <i class="fas fa-chevron-right"></i>
+                </p>
+            </a>
+        </div>
+        <div class="themeBar">
+            <div class="theme-wrapper">
+                <button id="themeChangeBtn" class="theme-btn">
+                    <i class="fas theme-icon"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+    <br>
+    <div class="cipher-container">
+        <h1>Caesar Cipher</h1>
+        <div>
+            <label for="shift">Shift (0-25):</label>
+            <input type="number" id="shift" min="0" max="25">
+        </div>
+        <div>
+            <label for="plain-text">Text to Encrypt/Decrypt:</label>
+            <input type="text" id="plain-text">
+        </div>
+        <div>
+            <button id="encrypt-button">Encrypt</button>
+            <button id="decrypt-button">Decrypt</button>
+        </div>
+        <div id="cipher-text"></div>
+        <div id="error-message"></div>
+    </div>
+
+    <!-- Copyright -->
+    <div class="copyright">&copy; All rights reserved. <a href="../index.html">CodeBreakers</a>.</div>
+
+    <!-- Scripts -->
+    <script src="../assets/js/jquery.min.js"></script>
+    <script src="../assets/js/jquery.scrolly.min.js"></script>
+    <script src="../assets/js/browser.min.js"></script>
+    <script src="../assets/js/breakpoints.min.js"></script>
+    <script src="../assets/js/util.js"></script>
+    <script src="../assets/js/main.js"></script>
+    <script src="../assets/js/nav.js"></script>
+    <script src="../assets/js/load.js"></script>
+    <script>
+        function caesarCipher(text, shift) {
+            const alphabet = 'abcdefghijklmnopqrstuvwxyz';
+            let result = '';
+            text = text.toLowerCase();
+
+            for (let i = 0; i < text.length; i++) {
+                const char = text[i];
+                const index = alphabet.indexOf(char);
+                if (index === -1) {
+                    result += char; // non-alphabetic characters are added as-is
+                } else {
+                    const newIndex = (index + shift) % 26;
+                    result += alphabet[newIndex];
+                }
+            }
+            return result;
+        }
+
+        function handleCipher(action) {
+            const shift = parseInt(document.getElementById('shift').value);
+            const text = document.getElementById('plain-text').value;
+            const errorMessage = document.getElementById('error-message');
+            let result;
+
+            if (isNaN(shift) || shift < 0 || shift > 25) {
+                errorMessage.textContent = 'Shift must be a number between 0 and 25.';
+                return;
+            }
+
+            if (action === 'encrypt') {
+                result = caesarCipher(text, shift);
+            } else if (action === 'decrypt') {
+                result = caesarCipher(text, -shift);
+            }
+
+            document.getElementById('cipher-text').textContent = result;
+            errorMessage.textContent = '';
+        }
+
+        document.getElementById('encrypt-button').addEventListener('click', () => handleCipher('encrypt'));
+        document.getElementById('decrypt-button').addEventListener('click', () => handleCipher('decrypt'));
+    </script>
+</body>
+</html>
